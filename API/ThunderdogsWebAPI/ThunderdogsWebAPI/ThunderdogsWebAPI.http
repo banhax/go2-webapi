@@ -1,0 +1,10 @@
+@ThunderdogsWebAPI_HostAddress = http://localhost:5263
+
+POST {{ThunderdogsWebAPI_HostAddress}}/camerafeed/
+Accept: text/plain
+
+
+
+
+
+###
