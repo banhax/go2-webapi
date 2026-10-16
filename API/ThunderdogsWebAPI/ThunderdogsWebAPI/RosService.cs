@@ -5,7 +5,9 @@ using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
 
 namespace ThunderdogsWebAPI {
     public class RosService : IRosService {
+        // the rosbridge server to connect to
         string URI { get => "ws://192.168.167.134:9090"; }
+
         RosSocket rosSocket;
 
         // self explanatory
@@ -14,14 +16,15 @@ namespace ThunderdogsWebAPI {
         }
 
 
-        // deconstructor simply to close the socket on destruction of the object
+        // close the socket on destruction
         ~RosService()
         {
             rosSocket.Close();
         }
 
-        // method for publishing to rosbridge, abstracting a lot of the funky stuff
-        public void Publish(string topic, string payload)
+        // method for publishing to rosbridge, this will just publish strings
+        // i think we will need overloads for different types (to publish different ros2 topic objects)
+        public string Publish(string topic, string payload)
         {
             std_msgs.String message = new std_msgs.String
             {
@@ -32,7 +35,7 @@ namespace ThunderdogsWebAPI {
 
             rosSocket.Publish(publication_id, message);
 
-            Console.WriteLine($"PUBLISH TO ROS2" +
+            return ($"PUBLISH TO ROS2" +
                               $"\n  topic : {publication_id}" +
                               $"\n  data : {message.data}");
         }

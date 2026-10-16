@@ -14,9 +14,7 @@ namespace ThunderdogsWebAPI.Controllers {
 
         [HttpGet(Name = "GetCameraFeed")]
         public string Get() {
-            rosService.Publish("foob", "aaaahh");
-
-            return "HelloWorld";
+            return rosService.Publish("foob", "aaaahh");
         }
 
         [HttpPost]
