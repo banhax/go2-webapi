@@ -10,7 +10,12 @@ namespace ThunderdogsWebAPI.Types
 
         public ConnectedClients()
         {
-            this.clients = [];
+
+        }
+
+        public ConnectedClients(ConnectedClient[] clients)
+        {
+            this.clients = clients;
         }
     }
 
@@ -23,8 +28,7 @@ namespace ThunderdogsWebAPI.Types
 
         public ConnectedClient()
         {
-            this.ip_address = "";
-            this.connection_time = new Time();
+
         }
 
         public ConnectedClient(string ip_address, Time connection_time)

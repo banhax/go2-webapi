@@ -4,6 +4,7 @@ using RosSharp.RosBridgeClient;
 using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.Protocols;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace ThunderdogsWebAPI {
     public static class RosService {
@@ -49,11 +50,17 @@ namespace ThunderdogsWebAPI {
             var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
             
             string subscription_id = rosSocket.Subscribe<T>($"{topic}", message => SubscriptionHandler(message, tcs));
+
             return tcs.Task;
         }
 
         private static void SubscriptionHandler<T>(T message, TaskCompletionSource<T> tcs) {
-            Console.WriteLine("Received message: " + message);
+            //Console.WriteLine("Received message: " + message);
+
+            string jsonString = JsonConvert.SerializeObject(message);
+
+            Console.WriteLine($"{jsonString}\n");
+
             tcs.TrySetResult(message);
         }
     }

@@ -19,11 +19,11 @@ namespace ThunderdogsWebAPI.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Callback()
+        public async Task<IActionResult> Post()
         {
             //do task!
-            var data = await RosService.SubscribeAsync<DiagnosticArray>("/foob");
-            Console.WriteLine(data);
+            var data = await RosService.SubscribeAsync<Image>("/camera/raw_image");
+
             return Ok(new { data = $"{data}" });
         }
     }
