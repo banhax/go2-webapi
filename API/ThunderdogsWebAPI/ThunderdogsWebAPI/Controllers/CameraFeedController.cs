@@ -1,27 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ThunderdogsWebAPI.Interfaces;
 using ThunderdogsWebAPI.Types;
+using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
 
 namespace ThunderdogsWebAPI.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class CameraFeedController : ControllerBase {
-        private IRosService rosService;
+        //private IRosService rosService;
 
-        public CameraFeedController(IRosService ros) {
-            rosService = ros;
-        }
+        //public CameraFeedController(IRosService ros) {
+        //    rosService = ros;
+        //}
 
         [HttpGet(Name = "GetCameraFeed")]
         public string Get() {
-            return rosService.Publish("foob", "aaaahh");
+            return RosService.Publish("foob", "aaaahh");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Callback() {
+        public async Task<IActionResult> Callback()
+        {
             //do task!
-            var data = await rosService.SubscribeAsync<ConnectedClients>("/connected_clients");
-            
+            var data = await RosService.SubscribeAsync<DiagnosticArray>("/foob");
+            Console.WriteLine(data);
             return Ok(new { data = $"{data}" });
         }
     }
