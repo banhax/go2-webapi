@@ -7,4 +7,4 @@ The goal is to create an API that runs on a Raspberry Pi, which would then be ha
 This is still HIGHLY in WIP and there is NO expectation for this API to actually even function. (this will be changed whenever progress is made, i guess)  
 
 ### Link to the Project Document
-https://docs.google.com/document/d/1bmaS-4zomc_Wv7a3lmuYfbQUstoLPiS4WbvGmQoPSzY/edit?usp=sharing
+https://tafewa-my.sharepoint.com/:w:/r/personal/20094400_tafe_wa_edu_au1/Documents/Live%20Works%20Project%20Template(1).docx?d=w289c17887fd441aabf43bc10926ba982&csf=1&web=1&e=cb5gTa
