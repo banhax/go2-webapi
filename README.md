@@ -5,3 +5,6 @@ This repository is for work based on the .NET WebAPI, for the Thunderdogs projec
 The goal is to create an API that runs on a Raspberry Pi, which would then be hard-wired (ethernet) to the dog, and expose the ROS2 topics through the API, abstracting away a lot of the complexities.  
 
 This is still HIGHLY in WIP and there is NO expectation for this API to actually even function. (this will be changed whenever progress is made, i guess)  
+
+### Link to the Project Document
+https://docs.google.com/document/d/1bmaS-4zomc_Wv7a3lmuYfbQUstoLPiS4WbvGmQoPSzY/edit?usp=sharing
