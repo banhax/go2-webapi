@@ -1,0 +1,151 @@
+﻿@page "/controller"
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Controller</PageTitle>
+
+<h1>Controller</h1>
+
+<div style="display: grid; grid-template-columns: 420px 2fr 20px 1fr; gap: 10px; align-items: start;">
+
+    <div class="split-grid">
+        <div class="image-box" style="border: 1px solid #b8b8b8;">
+            <img alt="Top" src="/images/dpad_2.png" 
+                style="width: 100%; height: 100%; 
+                grid-column: 1; grid-row: 1;"/>
+
+            <div class="image-grid" style="grid-column: 1; grid-row: 1; 
+                transform: translateY(2px);">
+                
+                <button style="grid-row: 1; grid-column: 2; background-color: rgba(255, 255, 255, 0);"
+                        @onclick="() => OnButtonClick(0, 1)">
+                </button>
+                <button style="grid-row: 2; grid-column: 1; background-color: rgba(255, 255, 255, 0);"
+                        @onclick="() => OnButtonClick(1, 0)">
+                </button>
+
+
+                <button style="grid-row: 2; grid-column: 3; background-color: rgba(255, 255, 255, 0);"
+                        @onclick="() => OnButtonClick(1, 2)">
+                </button>
+                <button style="grid-row: 3; grid-column: 2; background-color: rgba(255, 255, 255, 0);"
+                        @onclick="() => OnButtonClick(2, 1)">
+                </button>
+
+
+                <button style="grid-row: 1; grid-column: 1; margin-bottom: 18px; margin-right: 15px;
+                        background-color: rgba(255, 255, 255, 0);" @onclick="() => OnButtonClick(0, 0)">
+                        <img src="/images/turn_arrow.png" style="width: 100%; height: 100%;"/>
+                </button>
+                <button style="grid-row: 1; grid-column: 3; margin-bottom: 18px; margin-left: 15px;
+                        background-color: rgba(255, 255, 255, 0);" @onclick="() => OnButtonClick(0, 2)">
+                        <img src="/images/turn_arrow2.png" style="width: 100%; height: 100%;"/>
+                </button>
+            </div>
+        </div>
+
+        @* <select class="form-select" style:"grid-row: 1;" @bind="ModeValue">
+            <option value="" disabled selected>-- Select a Mode --</option>
+            @foreach (var item in ModeList)
+            {
+                <option value="@item">@item</option>
+            }
+        </select> *@
+    </div>
+
+    <div style="border: 2px dashed #ccc; padding: 20px; border-radius: 8px;">
+        <h3>Poses & Advanced Movement</h3>
+        <select class="form-select" @bind="SelectedValue">
+            <option value="" disabled selected>-- Select an option --</option>
+            @foreach (var item in OptionsList)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+
+        <p style="padding: 5px;"> 
+            You selected: <strong>@SelectedValue</strong>
+        </p>
+    </div>
+
+    <div style="grid-column: 4;">
+        <div style="border: 3px solid #ccc; padding: 16px;">
+            <video id="videoFeed" width="350" height="400" autoplay playsinline></video>
+        </div>
+
+        <div class="mt-2">
+            <button class="btn btn-primary" @onclick="StartCamera">Start Camera</button>
+            <button class="btn btn-danger" @onclick="StopCamera">Stop Camera</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    // 2D array holding the file paths or URLs
+    private string[,] ImageGrid = new string[3, 3]
+    {
+        { "", "", "" },
+        { "", "", "" },
+        { "", "", "" }
+    };
+
+    private void OnButtonClick(int row, int col)
+    {
+        Console.WriteLine($"Clicked image at row {row}, col {col}: {ImageGrid[row, col]}");
+        @* if (ModeValue == null || ModeValue == string.Empty)
+        { ModeValue = "SportMode"; } *@
+
+        
+        if (row == 0 && col == 1) // forward
+        {
+            //Client.Move(0.75, 0.0, 0.0);
+        }
+        else if (row == 1 && col == 2) // right
+        {
+            //Client.Move(0.0, 0.75, 0.0);
+        }
+        else if (row == 1 && col == 0) // left
+        {
+            //Client.Move(0.0, -0.75, 0.0);
+        }
+        else if (row == 2 && col == 1) // backward
+        {
+            //Client.Move(-0.75, 0.0, 0.0);
+        }
+
+
+        else if (row == 0 && col == 0) // turn_left
+        {
+            //Client.Move(0.0, 0.0, -0.45);
+        }
+        else if (row == 0 && col == 2) // turn_right
+        {
+            //Client.Move(0.0, 0.0, 0.45);
+        }
+    }
+
+
+    // picker > The collection of options
+    private List<string> OptionsList = new() 
+    { "(Null)", "StandUp", "StandDown", "Sit", "RiseSit", "BalanceStand", 
+      "Damp", "Hello", "Stretch", "Heart", "Scrape" };
+
+    private string SelectedValue { get; set; } = string.Empty;
+
+    @* private List<string> ModeList = new() 
+    { "(Null)", "SportMode"}; *@
+    @* private string ModeValue { get; set; } = string.Empty; *@
+
+
+    // backup camera
+    public async Task StartCamera()
+    {
+        await JSRuntime.InvokeVoidAsync("startVideo", "videoFeed");
+    }
+
+    public async Task StopCamera()
+    {
+        await JSRuntime.InvokeVoidAsync("stopVideo", "videoFeed");
+    }
+}

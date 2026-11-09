@@ -1,0 +1,50 @@
+﻿@page "/topics"
+@inject HttpClient Http
+
+<PageTitle>Topics</PageTitle>
+
+<h1>Topics</h1>
+
+@if (topics == null)
+{
+    <!-- Visual visual anchor for loading state -->
+    <p><em>⏳ Loading topics from external application...</em></p>
+}
+else if (!topics.Any())
+{
+    <p>No topics found.</p>
+}
+else
+{
+    <div class="card-container" style="border: 3px solid #ccc; padding: 16px;" >
+        @foreach (var topic in topics)
+        {
+            <div class="card mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@topic.Title</h5>
+                    <h6 class="text-muted">ID: @topic.Id</h6>
+                    <p class="card-text">@topic.Description</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Go2_Topic>? topics;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Calls the endpoint of the other application (e.g., https://external-app.com)
+            topics = await Http.GetFromJsonAsync<List<Go2_Topic>>("api/topics");
+        }
+        catch (Exception ex)
+        {
+            // Handle connection errors or unauthorized errors here
+            Console.WriteLine($"Error fetching topics: {ex.Message}");
+            topics = new List<Go2_Topic>(); 
+        }
+    }
+}

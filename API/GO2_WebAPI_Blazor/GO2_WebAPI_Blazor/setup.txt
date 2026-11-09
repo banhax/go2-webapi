@@ -1,0 +1,16 @@
+vscode
+
+run debug, c# default configuation
+
+Components/App.razor
+ - <script src="camera.js"></script>
+
+Razor class objects: wwwroot./app.css
+
+ For grids:
+  - dotnet add package Microsoft.AspNetCore.Components.QuickGrid
+
+
+
+  icons are activated in:  Layout/NavMenu.razor.css
+  
